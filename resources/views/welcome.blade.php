@@ -67,6 +67,10 @@
                     {data: 'name', name: 'name'},
                     {data: 'email', name: 'email'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
+                ],
+                dom: 'Bfrtip',
+                buttons: [
+                    'csv', 'excel', 'pdf', 'pageLength',
                 ]
             });
         </script>
