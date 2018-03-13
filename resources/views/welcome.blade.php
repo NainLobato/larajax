@@ -11,85 +11,64 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.bootstrap4.min.css') }}">
     </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+    <body class="container">
+        <br><br>
+        <div class="card">
+            <div class="card-header">
+                Contactos
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4>Contact list
+                                    <a onclick="addForm()" class="btn btn-primary pull-right" style="margin-top: -8px;">Add Contact</a>
+                                </h4>
+                            </div>
+                            <div class="panel-body">
+                                <table id="contact-table" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="30">No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <script src="{{ asset('js/jquery.min.js')}}" ></script>
+        <script src="{{ asset('js/popper.min.js')}}" ></script>
+        <script src="{{ asset('js/bootstrap.min.js')}}" ></script>
+        <script src="{{ asset('js/datatables.min.js')}}" ></script>
+        <script src="{{ asset('js/buttons.bootstrap4.min.js')}}" ></script>
+        <script type="text/javascript">
+            var table = $('#contact-table').DataTable({
+                language: {
+                    "url": "http://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('api.contact') }}",
+                columns: [
+                    {data: 'id', name: 'id'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'action', name: 'action', orderable: false, searchable: false}
+                ]
+            });
+        </script>
     </body>
 </html>
